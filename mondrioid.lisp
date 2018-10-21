@@ -18,3 +18,14 @@
 
 
 (in-package #:mondrioid)
+
+(defun number-of-lines (&key (at-least 2) (at-most 8) (random-state *random-state*))
+  (+ at-least (random (- at-most at-least) random-state)))
+
+(defun mondrioid (&key (random-state *random-state*) (frame t))
+  (with-canvas (c)
+    (when frame (make-background c))
+    (loop :repeat (number-of-lines :random-state random-state)
+          :do (make-horizontal-line c (random *canvas-height* random-state)))
+    (loop :repeat (number-of-lines :random-state random-state)
+          :do (make-vertical-line c (random *canvas-width* random-state)))))
