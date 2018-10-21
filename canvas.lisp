@@ -43,11 +43,13 @@
     (ltk:itemconfigure canvas rectangle :fill color)))
 
 (defun make-horizontal-line (canvas y)
-  (let* ((delta (round (/ *canvas-line-thickness* 2)))
-         (rectangle (ltk:create-rectangle canvas 0 (- y delta) *canvas-width* (+ y delta))))
+  (let ((rectangle (ltk:create-rectangle canvas
+                                         0 y
+                                         *canvas-width* (+ y *canvas-line-thickness*))))
     (ltk:itemconfigure canvas rectangle :fill :black)))
 
 (defun make-vertical-line (canvas x)
-  (let* ((delta (round (/ *canvas-line-thickness* 2)))
-         (rectangle (ltk:create-rectangle canvas (- x delta) 0 (+ x delta) *canvas-height*)))
+  (let* ((rectangle (ltk:create-rectangle canvas
+                                          x 0
+                                          (+ x *canvas-line-thickness*) *canvas-height*)))
     (ltk:itemconfigure canvas rectangle :fill :black)))
