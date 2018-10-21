@@ -1,5 +1,4 @@
-;;;; mondrioid.asd
-;;
+;;;; canvas.lisp
 ;; This file is part of mondrioid.
 ;;
 ;; Mondrioid is free software: you can redistribute it and/or modify
@@ -18,13 +17,19 @@
 ;;;; Copyright (c) 2018 Michael Cornelius <michael@ninthorder.com>
 
 
-(asdf:defsystem #:mondrioid
-  :description "Create images evocative of the work of Piet Mondrian."
-  :author "Michael Cornelius <michael@ninthorder.com>"
-  :license  "GPL-3.0-or-later"
-  :version "0.0.1"
-  :serial t
-  :depends-on (:ltk)
-  :components ((:file "package")
-               (:file "canvas")
-               (:file "mondrioid")))
+(in-package :mondrioid)
+
+(defparameter *canvas-x* 512)
+(defparameter *canvas-y* 512)
+(defparameter *canvas-background* :white)
+
+(defmacro with-canvas ((widget) &body body)
+  `(ltk:with-ltk ()
+     (let ((,widget (make-instance 'ltk:canvas
+                     :master nil
+                     :height *canvas-height*
+                     :width *canvas-width*
+                     :background *canvas-background*)))
+       ,@body
+       (ltk:pack ,widget))))
+
