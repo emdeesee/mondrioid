@@ -19,9 +19,10 @@
 
 (in-package :mondrioid)
 
-(defparameter *canvas-x* 512)
-(defparameter *canvas-y* 512)
-(defparameter *canvas-background* :white)
+(defparameter *canvas-width* 512)
+(defparameter *canvas-height* 512)
+(defparameter *canvas-background* :black)
+(defparameter *canvas-line-thickness* 4)
 
 (defmacro with-canvas ((widget) &body body)
   `(ltk:with-ltk ()
@@ -33,3 +34,20 @@
        ,@body
        (ltk:pack ,widget))))
 
+(defun make-background (canvas &key (color :white))
+  (let ((rectangle (ltk:create-rectangle canvas
+                                         *canvas-line-thickness*
+                                         *canvas-line-thickness*
+                                         (- *canvas-width* *canvas-line-thickness*)
+                                         (- *canvas-height* *canvas-line-thickness*))))
+    (ltk:itemconfigure canvas rectangle :fill color)))
+
+(defun make-horizontal-line (canvas y)
+  (let* ((delta (round (/ *canvas-line-thickness* 2)))
+         (rectangle (ltk:create-rectangle canvas 0 (- y delta) *canvas-width* (+ y delta))))
+    (ltk:itemconfigure canvas rectangle :fill :black)))
+
+(defun make-vertical-line (canvas x)
+  (let* ((delta (round (/ *canvas-line-thickness* 2)))
+         (rectangle (ltk:create-rectangle canvas (- x delta) 0 (+ x delta) *canvas-height*)))
+    (ltk:itemconfigure canvas rectangle :fill :black)))
