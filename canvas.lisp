@@ -42,14 +42,14 @@
                                          (- *canvas-height* *canvas-line-thickness*))))
     (ltk:itemconfigure canvas rectangle :fill color)))
 
+(defun make-block (canvas x0 y0 x1 y1 &optional (color :black))
+  (let ((rectangle (ltk:create-rectangle canvas x0 y0 x1 y1)))
+    (ltk:itemconfigure canvas rectangle :fill color)))
+
 (defun make-horizontal-line (canvas y)
-  (let ((rectangle (ltk:create-rectangle canvas
-                                         0 y
-                                         *canvas-width* (+ y *canvas-line-thickness*))))
-    (ltk:itemconfigure canvas rectangle :fill :black)))
+  ;; lines are just long skinny rectangles
+  (make-block canvas 0 y *canvas-width* (+ y *canvas-line-thickness*)))
 
 (defun make-vertical-line (canvas x)
-  (let* ((rectangle (ltk:create-rectangle canvas
-                                          x 0
-                                          (+ x *canvas-line-thickness*) *canvas-height*)))
-    (ltk:itemconfigure canvas rectangle :fill :black)))
+  ;; lines are just long skinny rectangles
+  (make-block canvas x 0 (+ x *canvas-line-thickness*) *canvas-height*))
