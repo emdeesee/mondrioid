@@ -44,7 +44,8 @@
 
 (defun make-block (canvas x0 y0 x1 y1 &optional (color :black))
   (let ((rectangle (ltk:create-rectangle canvas x0 y0 x1 y1)))
-    (ltk:itemconfigure canvas rectangle :fill color)))
+    (ltk:itemconfigure canvas rectangle :fill color)
+    (ltk:itemconfigure canvas rectangle :outline color)))
 
 (defun make-horizontal-line (canvas y)
   ;; lines are just long skinny rectangles
